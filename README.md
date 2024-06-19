@@ -9,7 +9,7 @@ TriadJS group project movie app
     - [Setting up .env file](#setting-up-env-file)
     - [Installing dependencies](#installing-dependencies)
     - [Running the app](#running-the-app)
-- [Getting an API Key / Token](#getting-an-api-key--token)
+- [Getting an API Key and Token](#getting-an-api-key-and-token)
 
 
 # Setup your development environment
