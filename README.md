@@ -1,6 +1,16 @@
 # project-movie-app
 TriadJS group project movie app
 
+## Table of Contents
+
+- [Setup your development environment](#setup-your-development-environment)
+    - [MacOS](#setting-up-node-on-macos)
+    - [Windows](#setting-up-node-on-windows)
+    - [Setting up .env file](#setting-up-env-file)
+    - [Installing dependencies](#installing-dependencies)
+    - [Running the app](#running-the-app)
+- [Getting an API Key and Token](#getting-an-api-key-and-token)
+
 
 # Setup your development environment
 
@@ -21,7 +31,7 @@ It uses `.nvmrc` file to specify the version of node to use.
     $ node -v
     ```
 
-#### Troubleshooting
+#### Troubleshooting MacOS
 
 This is for newer Mac's that use zsh terminals (MacOS Catalina and up).
 
@@ -91,7 +101,7 @@ You don't have to use nvm. You can install node.js through the [node.js website]
     ```sh
     nvm use 22.3.0
     ```
-#### Troubleshooting
+#### Troubleshooting Windows
 
 [watch this video for help](https://www.youtube.com/watch?v=KW7_F-6Vsa8) 0:00 mins to 2:44 mins
 
@@ -104,6 +114,7 @@ You don't have to use nvm. You can install node.js through the [node.js website]
 1. Create a `.env` file in the root of the project
 2. Copy the contents of `.env.example` to `.env`
 3. Fill in the values in `.env` file
+4. Don't forget to add your API Key and API Token to your `.env` file.
 
 ## Installing dependencies
 
@@ -116,3 +127,21 @@ $ npm install
 ```sh
 $ npm start
 ```
+
+## Getting an API Key and Token
+
+We are using [themoviedb.org](themoviedb.org) API for our requests. Sadly they now require a lot of info about you before they give you an API key and token. They didn't use to and I didn't realize that until helping another person register their app. I do know they have had a lot of bad actors using their API so they had to do something. However, I still think they have the best movie and tv show API around. They are the go to source for a lot of other sites because of their vast amount of data and images.
+
+1. Sign up for a basic account [https://www.themoviedb.org/signup](https://www.themoviedb.org/signup)
+2. Verify your email address using a link they send you via email and then log in.
+3. Go to the settings and then click api or use this link [https://www.themoviedb.org/settings/api](https://www.themoviedb.org/settings/api)
+4. Under Request an API Key use the "click here" link.
+5. You have a choice between two options. Choose Developer. Click accept if you agree.
+6. Type of Use select Website 
+7. Application name is up to you
+8. Application URL can be set to localhost:3000
+9. Application summary has to be a short sentence or you will get an error
+10. Fill out the rest of the form and click submit
+11. You will be presented with your API Key and an API Read Access Token. Copy your API Key and Token to your local `.env` file. 
+    - Side Note: Personally I recommend using the Token since it is used in all the examples. The Token also allows you to use v3 and v4 of the API and the API Key only lets you use v3. Basically the API key works through a query parameter in the URL and the Token works through setting a header in your URL request. I know people are at different knowledge levels that is why I included both.
+12. That is it. You can find the API docs here [developer.themoviedb.org](https://developer.themoviedb.org/docs/getting-started) and endpoints here [https://developer.themoviedb.org/reference/intro/getting-started](https://developer.themoviedb.org/reference/intro/getting-started).
