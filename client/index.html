@@ -2,12 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Movie App</title>
-
-    <link rel="stylesheet" href="css/main.css">
-    <script type='module' src="js/index.mjs"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Initial Design - v4</title>
+    <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-    <h1>TriadJS Movie App  (Click me and check logs)</h1>
+    <div class="full-width-trailer" id="fullWidthTrailer">
+        <button class="close-trailer" id="closeTrailer" onclick="collapse()">Close Trailer</button>
+        <div class="iframe-container">
+            <iframe class="movie-trailer-iframe" src="https://www.youtube.com/embed/hRFY_Fesa9Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </div>
+    <div class="results-container" id="results">
+        
+    </div>
+    <div class="btn-container">
+        <button class="btn-load-more" id="loadMore" onclick="loadMore()">Load More</button>
+    </div>
+    <script src="./js/index.js"></script>
 </body>
 </html>
