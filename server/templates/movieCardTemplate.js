@@ -9,17 +9,17 @@ function movieCardTemplate(movieList) {
         let finalPosterPath = `https://image.tmdb.org/t/p/w185${poster_path}`
 
         tempString += `<div class="card" id="${id}">
-            <div class="btn-trailer-container">
-                <button class="btn-trailer" onClick="openCloseModal('${id}')">Play Trailer</button>
+            <div class="">
+                <button class="card__trailer-btn" onClick="toggleModalVisibility('${id}')">Play Trailer</button>
             </div>
-            <div class="card-img">
-                <img src="${finalPosterPath}" alt="" class="img-fluid">
+            <div class="">
+                <img src="${finalPosterPath}" alt="" class="card__img-fluid">
             </div>
-            <div class="card-text">
-                <div class="item-title">
+            <div class="">
+                <div class="">
                 ${title}
                 </div>
-                <div class="release-date">
+                <div class="card__release-date">
                     ${release_date}
                 </div>
             </div>

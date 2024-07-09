@@ -17,56 +17,64 @@ async function getMovies() {
   }
 }
 
-async function openCloseModal(movieId) {
+function toggleModalVisibility(movieId) {
+  if (modalTrailers.classList.contains('modal__show')) {
+      modalTrailers.classList.remove('modal__show');
+
+      hideModal();
+  } else {
+      showModal(movieId);
+  }
+}
+
+function hideModal() {
+  const modalHeading = document.getElementById("modalHeading");
+  const modalBody = document.getElementById("modalBody");
+  // This line resets scrolling outside of the modal
+  document.body.style.overflow = '';
+  modalHeading.innerHTML = "";
+  modalBody.innerHTML = "";
+  // Reset currentVisibleDiv it handles the show hide of each trailer category
+  currentVisibleDiv = null;
+}
+
+async function showModal(movieId) {
   const modalHeading = document.getElementById("modalHeading");
   const modalBody = document.getElementById("modalBody");
 
-  if (modalTrailers.classList.contains('modal-show')) {
-      modalTrailers.classList.remove('modal-show');
-      
-      document.body.style.overflow = '';
-      modalHeading.innerHTML = "";
-      modalBody.innerHTML = "";
-      // Reset currentVisibleDiv
-      currentVisibleDiv = null;
-  } else {
-      modalTrailers.classList.add('modal-show');
-      document.body.style.overflow = 'hidden';
-      modalHeading.innerHTML = "Movie Trailers";
+  modalTrailers.classList.add('modal__show');
+  // This line prevents scrolling outside of the modal
+  document.body.style.overflow = 'hidden';
+  modalHeading.innerHTML = "Movie Trailers";
 
-      let getTrailers = await getMovieTrailers(movieId);
+  let getTrailers = await getMovieTrailers(movieId);
 
-      modalBody.innerHTML = `${getTrailers}`;
-      // Initialize currentVisibleDiv to the element with show-modal-trailers
-      currentVisibleDiv = document.querySelector('.show-modal-trailers');
-      // console.log(currentVisibleDiv);
-  }
+  modalBody.innerHTML = `${getTrailers}`;
+  // Initialize currentVisibleDiv to the element with modal__show-trailers
+  currentVisibleDiv = document.querySelector('.modal__show-trailers');
 }
 
 // Close the modal if someone clicks outside of the modal
 document.addEventListener('DOMContentLoaded', (event) => {
-  
-  // Close the modal when clicking outside of the modal content
-  window.onclick = function (event) {
+  window.onclick = event => {
     if (event.target == modalTrailers) {
-      openCloseModal();
+      toggleModalVisibility();
     }
   }
 });
 
-// Close the modal when touching outside of the modal content
-window.ontouchstart = function (event) {
+// Close the modal when touching outside of the modal content (for phones and tablets)
+window.ontouchstart = event => {
   if (event.target == modalTrailers) {
-    openCloseModal();
+    toggleModalVisibility();
   }
 }
 
 // Close modal if someone hits the escape key
-document.onkeydown = function (event) {
+document.onkeydown = event => {
   if (event.key === 'Escape') {
-      // Restore background scrolling
-    if (modalTrailers.classList.contains('modal-show')) {
-      openCloseModal();
+    if (modalTrailers.classList.contains('modal__show')) {
+      toggleModalVisibility();
     }
   }
 }
@@ -74,22 +82,21 @@ document.onkeydown = function (event) {
 async function getMovieTrailers(id) {
   const response = await fetch(`/api/movie-trailers/${id}`);
   const results = await response.json();
-  // console.log(results);
   return results;
 };
 
 function hideMovieTrailers(divId) {
   // Hide the currently visible div if it exists
   if (currentVisibleDiv) {
-    currentVisibleDiv.classList.remove('show-modal-trailers');
-    currentVisibleDiv.classList.add('hide-modal-trailers');
+    currentVisibleDiv.classList.remove('modal__show-trailers');
+    currentVisibleDiv.classList.add('modal__hide-trailers');
   }
   
   // Show the clicked div
   const targetDiv = document.getElementById(divId);
   if (targetDiv) {
-    targetDiv.classList.remove('hide-modal-trailers');
-    targetDiv.classList.add('show-modal-trailers');
+    targetDiv.classList.remove('modal__hide-trailers');
+    targetDiv.classList.add('modal__show-trailers');
     
     // Update the currently visible div
     currentVisibleDiv = targetDiv;

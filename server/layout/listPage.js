@@ -13,20 +13,20 @@ function listPage(movieList) {
             <body>
                 <!-- Modal Structure -->
                 <div id="modalTrailers" class="modal">
-                    <div class="modal-content">
-                        <div class="modal-header">
+                    <div class="modal__content">
+                        <div class="modal__header">
                             <h2 id="modalHeading">Modal Header</h2>
-                            <span class="modal-close-btn" onclick="openCloseModal()">&times;</span>
+                            <span class="modal__close-btn" onclick="toggleModalVisibility()">&times;</span>
                         </div>
-                        <div id="modalBody" class="modal-body">
+                        <div id="modalBody" class="modal__body">
                         </div>
                     </div>
                 </div>
                 <div class="results-container" id="results">
                     ${movieCardTemplate(movieList)}
                 </div>
-                <div class="btn-container">
-                    <button class="btn-load-more" id="loadMore" onClick="getMovies()">Load More</button>
+                <div class="load-more__btn-container">
+                    <button class="load-more__btn" id="loadMore" onClick="getMovies()">Load More</button>
                 </div>
                 <script src="./js/index.js"></script>
             </body>

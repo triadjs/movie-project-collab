@@ -83,15 +83,11 @@ function formatMovieTrailers(resultsArray) {
 }
 
 function buildTrailerIframe(type, youtubeId, trailerTitle) {
-  // return `<div class="iframe-container">
-  //         <iframe class="movie-trailer-iframe" loading="lazy" src="https://www.youtube.com/embed/${youtubeId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  //       </div>
-  //       <br>`
 
   if (type == "Clip") {
     return `
-    <h3 class="iframe-trailer-title">${trailerTitle}</h3>
-    <div class="iframe-container">
+    <h3 class="trailer__iframe--title">${trailerTitle}</h3>
+    <div class="trailer__iframe--container">
       <iframe 
         style="position: absolute; top: 0; left:0; width: 100%; height: 100%; border: 0;"
         loading="lazy";
@@ -104,8 +100,8 @@ function buildTrailerIframe(type, youtubeId, trailerTitle) {
     </div>`
   } else {
     return `
-      <h3 class="iframe-trailer-title">${trailerTitle}</h3>
-      <div class="iframe-container">
+      <h3 class="trailer__iframe--title">${trailerTitle}</h3>
+      <div class="trailer__iframe--container">
         <iframe 
           style="position: absolute; top: 0; left:0; width: 100%; height: 100%; border: 0;"
           loading="lazy";
@@ -155,28 +151,28 @@ function buildTrailerIframe(type, youtubeId, trailerTitle) {
 
 function displayMovieTrailers() {
   let modalButtons = `
-        <div class="modal-buttons">
-          <button id="modalTrailersBtn" onclick="hideMovieTrailers('modalTrailersDiv')">Trailers ${trailerListCount}</button>
-          <button id="modalTeasersBtn" onclick="hideMovieTrailers('modalTeasersDiv')">Teasers ${teaserListCount}</button>
-          <button id="modalClipsBtn" onclick="hideMovieTrailers('modalClipsDiv')">Clips ${clipListCount}</button>
-          <button id="modalBloopersBtn" onclick="hideMovieTrailers('modalBloopersDiv')">Bloopers ${bloopersListCount}</button>
-          <button id="modalBehindTheScenesBtn" onclick="hideMovieTrailers('modalBehindTheScenesDiv')">Behind The Scenes ${behindTheScenesListCount}</button>
+        <div>
+          <button id="modalTrailersBtn" class="modal__buttons" onclick="hideMovieTrailers('modalTrailersDiv')">Trailers ${trailerListCount}</button>
+          <button id="modalTeasersBtn" class="modal__buttons" onclick="hideMovieTrailers('modalTeasersDiv')">Teasers ${teaserListCount}</button>
+          <button id="modalClipsBtn" class="modal__buttons" onclick="hideMovieTrailers('modalClipsDiv')">Clips ${clipListCount}</button>
+          <button id="modalBloopersBtn" class="modal__buttons" onclick="hideMovieTrailers('modalBloopersDiv')">Bloopers ${bloopersListCount}</button>
+          <button id="modalBehindTheScenesBtn" class="modal__buttons" onclick="hideMovieTrailers('modalBehindTheScenesDiv')">Behind The Scenes ${behindTheScenesListCount}</button>
         </div>
       `;
   let listOutTrailers = `
-        <div id="modalTrailersDiv" class="show-modal-trailers">
+        <div id="modalTrailersDiv" class="modal__show-trailers">
           ${trailerList}
         </div>
-        <div id="modalTeasersDiv" class="hide-modal-trailers">
+        <div id="modalTeasersDiv" class="modal__hide-trailers">
           ${teaserList}
         </div>
-        <div id="modalClipsDiv" class="hide-modal-trailers">
+        <div id="modalClipsDiv" class="modal__hide-trailers">
           ${clipList}
         </div>
-        <div id="modalBloopersDiv" class="hide-modal-trailers">
+        <div id="modalBloopersDiv" class="modal__hide-trailers">
           ${bloopersList}
         </div>
-        <div id="modalBehindTheScenesDiv" class="hide-modal-trailers">
+        <div id="modalBehindTheScenesDiv" class="modal__hide-trailers">
           ${behindTheScenesList}
         </div>
       `;
