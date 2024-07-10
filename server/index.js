@@ -9,7 +9,7 @@ const listPage = require('./layout/listPage');
 const discoverMovieList = require('./services/discoverMoviesList');
 const getMovieTrailers = require('./services/getMovieTrailers');
 const movieCardTemplate = require('./templates/movieCardTemplate');
-const formatMovieTrailers = require('./templates/formatMovieTrailers');
+const trailersTemplate = require('./templates/trailersTemplate');
 
 app.use(express.static(path.join(__dirname, '../client')));
 
@@ -42,7 +42,7 @@ app.get('/api/movie-trailers/:id', async (req, res) => {
   try {
     const {id} = req.params;
     const movieTrailers = await getMovieTrailers(id);
-    res.send(JSON.stringify(formatMovieTrailers(movieTrailers)));
+    res.send(JSON.stringify(trailersTemplate(movieTrailers)));
   } catch (error) {
     console.log(error);
     res.send("error getting trailers");
