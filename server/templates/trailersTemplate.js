@@ -1,6 +1,6 @@
-const buildTrailerIframe = require('../helpers/buildTrailerIframe');
-const trailerButtons = require('../helpers/trailerButtons');
-const listOutTrailers = require('../helpers/listOutTrailers');
+const buildTrailerIframe = require('../partials/buildTrailerIframe');
+const trailerButtons = require('../partials/trailerButtons');
+const listOutTrailers = require('../partials/listOutTrailers');
 
 function trailersTemplate(resultsArray) {
     let results = resultsArray.results;
