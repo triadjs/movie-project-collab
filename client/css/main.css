@@ -1,5 +1,250 @@
+:root {
+    --bright-blue: rgb(0, 162, 255);
+    --light-blue: rgb(0, 162, 250);
+    --gray: rgb(133, 143, 161);
+    --light-gray: rgb(179, 184, 196);
+    --off-black: rgb(15, 15, 15);
+    --off-black-light: rgb(37 39 41 / 53%);
+    --red: red;
+    --white: rgb(245, 245, 245);
+    --yellow: yellow;
+}
 
-h1 {
-    background: yellow;
-    color: black;
+body {
+    background-color: var(--off-black);
+}
+
+.results-container {
+    /* xxs */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin: 10px;
+    max-width: 1400px;
+
+    /* xs */
+    @media (min-width: 374px) {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+    }
+
+    /* md */
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1rem;
+    }
+
+    /* lg */
+    @media (min-width: 992px) {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 1rem;
+    }
+
+    /* xl */
+    @media (min-width: 1200px) {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 1rem;
+    }
+
+    /* xxl */
+    @media (min-width: 1400px) {
+        grid-template-columns: repeat(8, 1fr);
+        gap: 1rem;
+    }
+    
+    /* centers the results container on the page 
+    because the grid doesn't grow past 1400px */
+    @media (min-width: 1450px) {
+        margin: 10px auto;
+    }
+}
+
+.card {
+    color: var(--bright-blue);
+
+    &:hover {
+        border: 2px solid var(--yellow);
+        border-radius: 8px;
+    }
+
+    & .card__trailer-btn {
+        width: 100%;
+        padding: 10px 0px;
+        border-radius: 5px 5px 0px 0px;
+        border: 0px;
+        background-color: var(--gray);
+        color: var(--off-black);
+    
+        &:hover {
+            background-color: var(--light-gray);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+
+    & .card__img-fluid {
+        width: 100%;
+        border-radius: 0px 0px 5px 5px;
+    }
+
+    & .card__release-date {
+        color: var(--gray);
+    }
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prevent scrolling outside the modal */
+    background-color: rgba(255, 255, 255, 0.3); /* Black with opacity */
+    align-items: start;
+    justify-content: center;
+    padding-top: 20px;
+
+    & .modal__content {
+        background-color: rgb(15, 15, 15);
+        color: #fff;
+        margin: 0 auto;
+        padding: 0; /* Remove padding from modal content */
+        width: 90%;
+        max-width: 800px;
+        max-height: 90%; /* Limit the height of the modal */
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column; /* Ensure children stack vertically */
+    }
+
+    & .modal__header {
+        padding: 10px 20px;
+        border-bottom: 1px solid #888;
+        border-radius: 5px 5px 0px 0px;
+        color: #fff;
+        position: sticky;
+        top: 0;
+        z-index: 2; /* Ensure it stays above other content */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        & h2 {
+            margin: 0px;
+        }
+    }
+
+    & .modal__body {
+        padding: 20px;
+        overflow-y: auto; /* Enable vertical scrolling */
+        flex: 1; /* Allow the body to take up remaining space */
+    
+        /* Custom scrollbar for Firefox */
+        scrollbar-width: thin; /* Makes the scrollbar thinner */
+        scrollbar-color: black white; /* thumb color | track color */
+    
+        /* Custom scrollbar for webkit browsers */
+        &::-webkit-scrollbar {
+            width: 10px; /* Width of the entire scrollbar */
+        }
+        /* Scrollbar track */
+        &::-webkit-scrollbar-track {
+            background: #000; /* Color of the track */
+        }
+        
+        /* Scrollbar thumb */
+        &::-webkit-scrollbar-thumb {
+            background-color: #fff; /* Color of the thumb */
+            border-radius: 5px;       /* Rounded corners of the thumb */
+        } 
+    }
+      
+    & .modal__close-btn {
+        color: #fff;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    
+        &:hover,
+         :focus {
+            color: #aaa;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
+
+    & .modal__buttons {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: blue;
+        color: var(--white);
+        transition: ease-in 0.3;
+    
+        &:hover {
+            background-color: var(--light-blue);
+            cursor: pointer;
+        }
+    }
+
+    & .modal__show-trailers {
+        display: block;
+    }
+    
+    & .modal__hide-trailers {
+        display: none;
+    }
+}
+
+/* has to be outside of the modal to work */
+.modal__show {
+    display: flex;
+}
+  
+.trailer__iframe--container {
+    position: relative;
+    width: 100%; 
+    padding-bottom: 56.25%;
+    overflow: hidden;
+
+    /* controls the movie trailer player */
+    & iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    & .trailer__iframe--title {
+        margin-bottom: 8px;
+    }    
+}
+
+.load-more__btn-container {
+    margin: 0px 10px;
+    max-width: 1400px;
+
+    @media (min-width: 1450px) {
+        margin: 10px auto;
+    }
+
+    & .load-more__btn {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 1.5rem;
+        background-color: blue;
+        border: none;
+        color: white;
+        transition: ease-in 0.3s;
+        
+        &:hover {
+            background-color: var(--light-blue);
+        }
+    }
 }
