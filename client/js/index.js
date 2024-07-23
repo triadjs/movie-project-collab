@@ -6,9 +6,9 @@ let currentVisibleDiv = null;
 // Starts at 2 because the server sends back page 1 of the results
 let pageNumber = 2;
 
-async function getMovies() {
+async function getMovies(currentEndpoint) {
   try {
-    const movieList = await fetch (`/api/movieList/${pageNumber}`);
+    const movieList = await fetch (`/api/loadMore/${pageNumber}/${currentEndpoint}`);
     const results = await movieList.json();
     resultsContainer.insertAdjacentHTML("beforeend", results);
     pageNumber += 1;
@@ -17,13 +17,13 @@ async function getMovies() {
   }
 }
 
-function toggleModalVisibility(movieId) {
+function toggleModalVisibility(movieId, contentType) {
   if (modalTrailers.classList.contains('modal__show')) {
       modalTrailers.classList.remove('modal__show');
 
       hideModal();
   } else {
-      showModal(movieId);
+      showModal(movieId, contentType);
   }
 }
 
@@ -38,7 +38,7 @@ function hideModal() {
   currentVisibleDiv = null;
 }
 
-async function showModal(movieId) {
+async function showModal(movieId, contentType) {
   const modalHeading = document.getElementById("modalHeading");
   const modalBody = document.getElementById("modalBody");
 
@@ -47,9 +47,9 @@ async function showModal(movieId) {
   document.body.style.overflow = 'hidden';
   modalHeading.innerHTML = "Movie Trailers";
 
-  let getTrailers = await getMovieTrailers(movieId);
+  let trailers = await getTrailers(movieId, contentType);
 
-  modalBody.innerHTML = `${getTrailers}`;
+  modalBody.innerHTML = `${trailers}`;
   // Initialize currentVisibleDiv to the element with modal__show-trailers
   currentVisibleDiv = document.querySelector('.modal__show-trailers');
 }
@@ -79,8 +79,8 @@ document.onkeydown = event => {
   }
 }
 
-async function getMovieTrailers(id) {
-  const response = await fetch(`/api/movie-trailers/${id}`);
+async function getTrailers(id, contentType) {
+  const response = await fetch(`/api/trailers/${id}/${contentType}`);
   const results = await response.json();
   return results;
 };

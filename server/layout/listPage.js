@@ -1,6 +1,6 @@
-const movieCardTemplate = require('../templates/movieCardTemplate');
+const movieTvCardTemplate = require('../templates/movieTvCardTemplate');
 
-function listPage(movieList) {
+function listPage(movieTvList, currentEndpoint) {
     
     return `<!DOCTYPE html>
             <html lang="en">
@@ -23,10 +23,10 @@ function listPage(movieList) {
                     </div>
                 </div>
                 <div class="results-container" id="results">
-                    ${movieCardTemplate(movieList)}
+                    ${movieTvCardTemplate(movieTvList)}
                 </div>
                 <div class="load-more__btn-container">
-                    <button class="load-more__btn" id="loadMore" onClick="getMovies()">Load More</button>
+                    <button class="load-more__btn" id="loadMore" onClick="getMovies('${currentEndpoint}')">Load More</button>
                 </div>
                 <script src="./js/index.js"></script>
             </body>

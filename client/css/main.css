@@ -82,6 +82,18 @@ body {
         }
     }
 
+    & .card__content-tv--wrapper {
+        position: relative;
+    }
+
+    & .card__content-tv {
+        position: absolute;
+        background-color: var(--off-black);
+        top: 5px;
+        left: 5px;
+        padding: 4px;
+    }
+
     & .card__img-fluid {
         width: 100%;
         border-radius: 0px 0px 5px 5px;
