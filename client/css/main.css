@@ -14,6 +14,41 @@ body {
     background-color: var(--off-black);
 }
 
+.navbar {
+    margin: 10px;
+
+    & .navbar__container {
+        display: flex;
+        flex-wrap: inherit;
+        align-items: center;
+        justify-content: space-between;
+        margin: 0px auto;
+        max-width: 1400px;
+    }
+
+    & .navbar__brand {
+        color: white;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+    & .navbar__list {
+        color: white;
+        list-style-type: none;
+        display: flex;
+    }
+
+    & .navbar__link {
+        color: white;
+        margin-left: 16px;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
 .results-container {
     /* xxs */
     display: grid;
