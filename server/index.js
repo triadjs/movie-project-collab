@@ -6,13 +6,21 @@ const path = require('path');
 const app = express();
 
 const listPage = require('./layout/listPage');
+
+//Templates
+const movieTvCardTemplate = require('./templates/movieTvCardTemplate');
+const trailersTemplate = require('./templates/trailersTemplate');
+
+//Services
 const discoverMovieList = require('./services/discoverMoviesList');
 const discoverTvList = require('./services/discoverTvList');
 const getMovieTrailers = require('./services/getMovieTrailers');
 const getTvTrailers = require('./services/getTvTrailers');
 const trendingList = require('./services/trendingList');
-const movieTvCardTemplate = require('./templates/movieTvCardTemplate');
-const trailersTemplate = require('./templates/trailersTemplate');
+const nowPlayingMovieList = require('./services/nowPlayingMovieList');
+const popularMovieList = require('./services/popularMovieList');
+const topRatedMovieList = require('./services/topRatedMovieList');
+const upcomingMovieList = require('./services/upcomingMovieList');
 
 app.use(express.static(path.join(__dirname, '../client')));
 
@@ -48,8 +56,37 @@ app.get('/hello', (req, res) => {
     `);
 })
 
-//// Below are all of our own custom api endpoints that we can call from the frontend
+//QUESTION: do we need 'req' parameter in function, given that it is never used?
+app.get('/now-playing-movie', async (req, res) => {
+  const pageNumberStart = 1;
+  const nowPlaying = await nowPlayingMovieList(pageNumberStart);
+  const list = listPage(nowPlaying.results, 'nowPlayingMovieList');
+  res.send(list);
+});
 
+app.get('/popular-movie', async(req, res) => {
+  const pageNumberStart = 1;
+  const popular = await popularMovieList(pageNumberStart);
+  const list = listPage(popular.results, 'popularMovieList');
+  res.send(list);
+});
+
+app.get('/top-rated-movie', async (req,res) =>{
+  const pageNumberStart = 1;
+  const topRated = await topRatedMovieList(pageNumberStart);
+  const list = listPage(topRated.results, 'topRatedMovieList');
+  res.send(list)
+});
+
+app.get('/upcoming-movie', async (req, res) => {
+  const pageNumberStart = 1;
+  const upcoming = await upcomingMovieList(pageNumberStart);
+  const list = listPage(upcoming.results, 'upcomingMovieList');
+  res.send(list)
+})
+
+//// Below are all of our own custom api endpoints that we can call from the frontend
+//TODO: make custom api endpoints for: nowplaying,popular,topRated,upcoming
 app.get('/api/loadMore/trending/:pageNum', async (req, res) => {
   const { pageNum } = req.params;
   try {
