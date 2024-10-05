@@ -1,27 +1,15 @@
 const movieTvCardTemplate = require('../templates/movieTvCardTemplate');
 
 function listPage(movieTvList, currentEndpoint) {
-    let functionToCall = '';
-    let titleOfPage = '';
 
-    // function names from the client side index.js - this handles which route we are on
-    if (currentEndpoint == 'trendingList') {
-        functionToCall = 'getTrending()';
-        titleOfPage = 'Trending';
-    } else if (currentEndpoint == 'discoverMovieList') {
-        functionToCall = 'getDiscoverMovie()';
-        titleOfPage = 'Discover Movies';
-    } else if (currentEndpoint == 'discoverTvList') {
-        functionToCall = 'getDiscoverTv()';
-        titleOfPage = 'Discover TV Shows';
-    }
-    
+    const {method, title} = setVariablesForHtmlTemplate(currentEndpoint); 
+
     return `<!DOCTYPE html>
             <html lang="en">
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>${titleOfPage}</title>
+                <title>${title}</title>
                 <link rel="stylesheet" href="./css/main.css">
             </head>
             <body>
@@ -52,11 +40,63 @@ function listPage(movieTvList, currentEndpoint) {
                     ${movieTvCardTemplate(movieTvList)}
                 </div>
                 <div class="load-more__btn-container">
-                    <button class="load-more__btn" id="loadMore" onClick="${functionToCall}">Load More</button>
+                    <button class="load-more__btn" id="loadMore" onClick="${method}">Load More</button>
                 </div>
                 <script src="./js/index.js"></script>
             </body>
             </html>`
+}
+
+function setVariablesForHtmlTemplate(currentEndpoint)
+{
+    let endpoints = {
+        trendingMovie: {
+            method: 'getTrending()',
+            title: 'Trending'
+        },
+        discoverMovie: {
+            method: 'getDiscoverMovie()',
+            title: 'Discover Movies'
+        },
+        discoverTv: {
+            method: 'getDiscoverTv()',
+            title: 'Discover TV Shows'
+        },
+        nowplayingMovie: {
+            method: 'nowPlayingMovieList()',
+            title: 'Now Playing Movies'
+        },
+        popularMovie: {
+            method: 'popularMovieList()', 
+            title: 'Popular Movies'
+        },
+        topRatedMovie: {
+            method: 'topRatedMovieList()',
+            title: 'Top Rated Movies'
+        },
+        upcomingMovie: {
+            method: 'upcomingMovieList()',
+            title: 'Upcoming Movies'
+        }
+    };
+
+    if (currentEndpoint == 'trendingList') {
+        return endpoints.trendingMovie;
+    } else if (currentEndpoint == 'discoverMovieList') {
+        return endpoints.discoverMovie;
+    } else if (currentEndpoint == 'discoverTvList') {
+        return endpoints.discoverTv;
+    } else if (currentEndpoint == 'nowPlayingMovieList') {
+        return endpoints.nowplayingMovie;
+    } else if (currentEndpoint == 'popularMovieList') {
+        return endpoints.popularMovie;
+    } else if(currentEndpoint=='topRatedMovieList') {
+        return endpoints.topRatedMovie;
+    } else if(currentEndpoint=='upcomingMovieList') {
+        return endpoints.upcomingMovie
+    }
+    //QUESTION: How should situations where endpoint is not found be handled?
+    return console.log("Error! Endpoint not found.");
 }
 
 module.exports = listPage;
