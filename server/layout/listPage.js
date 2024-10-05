@@ -48,6 +48,4 @@ function listPage(movieTvList, currentEndpoint) {
             </html>`
 }
 
-
-
 module.exports = listPage;

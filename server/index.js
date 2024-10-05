@@ -115,6 +115,7 @@ app.get('/upcoming-movie', async (req, res) => {
 });
 
 //// Below are all of our own custom api endpoints that we can call from the frontend
+
 app.get('/api/loadMore/trending/:pageNum', async (req, res) => {
   const { pageNum } = req.params;
   try {
