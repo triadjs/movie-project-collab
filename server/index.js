@@ -28,24 +28,38 @@ app.use(express.static(path.join(__dirname, '../client')));
 // In the future it should handle "all", "movie", and "tv" endpoints from The Movie DB
 // This endpoint needs to also handle "day" or "week"
 app.get('/', async (req, res) => {
-  const pageNumberStart = 1;
-  const trending = await trendingList(pageNumberStart);
-  const list = listPage(trending.results, 'trendingList');
-  res.send(list);
+  try {
+    const pageNumberStart = 1;
+    //QUESSTION: What would be a better name for 'trendingList'?
+    const trending = await trendingList(pageNumberStart);
+    const list = listPage(trending.results, 'trendingList');
+    res.send(list);
+  } catch (error) {
+    //QUESTION: Should we create our own custom error page???
+    console.log('Error fecthing data:', error);
+  }
 })
 
 app.get('/discover-movie', async (req, res) => {
-  const pageNumberStart = 1;
-  const movieList = await discoverMovieList(pageNumberStart);
-  const list = listPage(movieList.results, 'discoverMovieList');
-  res.send(list);
+  try {
+    const pageNumberStart = 1;
+    const movieList = await discoverMovieList(pageNumberStart);
+    const list = listPage(movieList.results, 'discoverMovieList');
+    res.send(list);    
+  } catch (error) {
+    console.log('Error fecthing data:', error);
+  }
 })
 
 app.get('/discover-tv', async (req, res) => {
-  const pageNumberStart = 1;
-  const tvList = await discoverTvList(pageNumberStart);
-  const list = listPage(tvList.results, 'discoverTvList');
-  res.send(list);
+  try {
+    const pageNumberStart = 1;
+    const tvList = await discoverTvList(pageNumberStart);
+    const list = listPage(tvList.results, 'discoverTvList');
+    res.send(list);    
+  } catch (error) {
+    console.log('Error fecthing data:', error);
+  }
 })
 
 app.get('/hello', (req, res) => {
@@ -56,37 +70,51 @@ app.get('/hello', (req, res) => {
     `);
 })
 
-//QUESTION: do we need 'req' parameter in function, given that it is never used?
 app.get('/now-playing-movie', async (req, res) => {
-  const pageNumberStart = 1;
-  const nowPlaying = await nowPlayingMovieList(pageNumberStart);
-  const list = listPage(nowPlaying.results, 'nowPlayingMovieList');
-  res.send(list);
+  try {
+    const pageNumberStart = 1;
+    const nowPlaying = await nowPlayingMovieList(pageNumberStart);
+    const list = listPage(nowPlaying.results, 'nowPlayingMovieList');
+    res.send(list);
+  } catch (error) {
+    console.log('Error fecthing data:', error);
+  }
 });
 
 app.get('/popular-movie', async(req, res) => {
-  const pageNumberStart = 1;
-  const popular = await popularMovieList(pageNumberStart);
-  const list = listPage(popular.results, 'popularMovieList');
-  res.send(list);
+  try {
+    const pageNumberStart = 1;
+    const popular = await popularMovieList(pageNumberStart);
+    const list = listPage(popular.results, 'popularMovieList');
+    res.send(list);    
+  } catch (error) {
+    console.log('Error fecthing data:', error);
+  }
 });
 
 app.get('/top-rated-movie', async (req,res) =>{
-  const pageNumberStart = 1;
-  const topRated = await topRatedMovieList(pageNumberStart);
-  const list = listPage(topRated.results, 'topRatedMovieList');
-  res.send(list)
+  try {
+    const pageNumberStart = 1;
+    const topRated = await topRatedMovieList(pageNumberStart);
+    const list = listPage(topRated.results, 'topRatedMovieList');
+    res.send(list)    
+  } catch (error) {
+    console.log('Error fecthing data:', error);
+  }
 });
 
 app.get('/upcoming-movie', async (req, res) => {
-  const pageNumberStart = 1;
-  const upcoming = await upcomingMovieList(pageNumberStart);
-  const list = listPage(upcoming.results, 'upcomingMovieList');
-  res.send(list)
-})
+  try {
+    const pageNumberStart = 1;
+    const upcoming = await upcomingMovieList(pageNumberStart);
+    const list = listPage(upcoming.results, 'upcomingMovieList');
+    res.send(list)
+  } catch (error) {
+    console.log('Error fecthing data:', error);
+  }
+});
 
 //// Below are all of our own custom api endpoints that we can call from the frontend
-//TODO: make custom api endpoints for: nowplaying,popular,topRated,upcoming
 app.get('/api/loadMore/trending/:pageNum', async (req, res) => {
   const { pageNum } = req.params;
   try {
@@ -136,6 +164,50 @@ app.get('/api/trailers/:id/:contentType', async (req, res) => {
   }
 })
 
+app.get('/api/loadMore/nowPlayingMovie/:pageNum', async (req, res) => {
+const { pageNum } = req.params;
+try {
+  const nowPlaying = await nowPlayingMovieList(pageNum);
+  const list = JSON.stringify(movieTvCardTemplate(nowPlaying.results));
+  res.send(list);
+} catch (error) {
+  console.error('Error fetching data:', error);
+}
+});
+
+app.get('/api/loadMore/popularMovie/:pageNum', async (req, res) => {
+const { pageNum } = req.params;
+try {
+  const popular = await popularMovieList(pageNum);
+  const list = JSON.stringify(movieTvCardTemplate(popular.results));
+  res.send(list);  
+} catch (error) {
+  console.error('Error fetching data:', error);
+}
+});
+
+app.get('/api/loadMore/topRatedMovie/:pageNum', async (req, res) => {
+  const { pageNum } = req.params
+  try {
+    const topRated = await topRatedMovieList(pageNum);
+    const list = JSON.stringify(movieTvCardTemplate(topRated.results));
+    res.send(list);
+  } catch (error) {
+    console.error('Error fecthing data:', error);
+  }
+});
+
+app.get('/api/loadMore/upcomingMovie/:pageNum', async (req, res) => {
+  const { pageNum } = req.params;
+  try {
+    const upcoming = await upcomingMovieList(pageNum);
+    const list = JSON.stringify(movieTvCardTemplate(upcoming.results));
+    res.send(list);
+  } catch (error) {
+    console.error('Error fecthing data:', error);
+  }
+});
+
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on port ${process.env.PORT}`);
-});
+}); 
