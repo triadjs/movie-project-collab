@@ -39,6 +39,48 @@ async function getDiscoverTv() {
   }
 }
 
+async function getNowPlayingMovie() {
+  try {
+    const nowPlayingList = await fetch (`/api/loadMore/nowPlayingMovie/${pageNumber}`);
+    const results = await nowPlayingList.json();
+    resultsContainer.insertAdjacentHTML("beforeend", results);
+    pageNumber+=1;
+  } catch (error) {
+    console.log('Error fecthing data:', error);
+  }
+}
+async function getPopularMovie() {
+  try {
+    const popularMovieList = await fetch(`/api/loadMore/popularMovie/${pageNumber}`);
+    const results = await popularMovieList.json();
+    resultsContainer.insertAdjacentHTML("beforeend", results);
+    pageNumber+=1;
+    console.log("inside getPopularMovie()")
+  } catch (error) {
+    console.log('Error fecthing data:', error);
+  }
+}
+async function getTopRatedMovie() {
+try {
+  const topRatedMovieList = await fetch(`/api/loadMore/popularMovie/${pageNumber}`);
+  const results = await topRatedMovieList.json();
+  resultsContainer.insertAdjacentHTML("beforeend", results);
+  pageNumber+=1;
+} catch (error) {
+  console.log('Error fecthing data:', error);
+}
+}
+async function getUpcomingMovie() {
+  try {
+    const upcomingMovieList = await fetch (`/api/loadMore/upcomingMovie/${pageNumber}`);
+    const results = await upcomingMovieList.json();
+    resultsContainer.insertAdjacentHTML("beforeend", results);
+    pageNumber+=1;
+  } catch (error) {
+    console.error('Error fecthing data:', error);
+  }
+}
+
 function toggleModalVisibility(movieId, contentType) {
   if (modalTrailers.classList.contains('modal__show')) {
       modalTrailers.classList.remove('modal__show');
